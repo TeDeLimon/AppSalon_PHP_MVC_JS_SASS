@@ -12,3 +12,8 @@ function s($html) : string {
     $s = htmlspecialchars($html);
     return $s;
 }
+
+//Función que revisa que el usuario está loggeado
+function isAuth(): void {
+    if(!isset($_SESSION['login'])) header('Location: /');
+}

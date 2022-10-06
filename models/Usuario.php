@@ -58,4 +58,24 @@ class Usuario extends ActiveRecord {
     public function crearToken() {
         $this->token = uniqid();
     }
+    public function validarLogin() {
+        if(!$this->email) self::$alertas['error'][] = 'El email es obligatorio';
+        if(!$this->password) self::$alertas['error'][] = 'La contraseña es obligatoria';
+        return self::$alertas;
+    }
+    public function validarEmail() {
+        if(!$this->email) self::$alertas['error'][] = 'El email es obligatorio';
+        return self::$alertas;
+    }
+    public function validarPasswordAndVerificado($email) {
+        $resultado = password_verify($email, $this->password);
+        if(!$resultado || !$this->confirmado) {
+            self::$alertas['error'][] = "Contraseña incorrecta o tu cuenta no ha sido confirmada";
+        } else return true;
+    }
+    public function validarPassword() {
+        if(!$this->password) self::$alertas['error'][] = "El password es obligatorio";
+        if(strlen($this->password) < 6) self::$alertas['error'][] = "El tamaño mínimo es de 6 caracteres";
+        return self::$alertas;
+    }
 }

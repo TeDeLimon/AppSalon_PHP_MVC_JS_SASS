@@ -65,7 +65,7 @@ class ActiveRecord {
         $atributos = [];
         foreach(static::$columnasDB as $columna) {
             if($columna === 'id') continue;
-            $atributos[$columna] = $this->$columna;
+            $atributos[$columna] = trim($this->$columna);
         }
         return $atributos;
     }
@@ -84,7 +84,7 @@ class ActiveRecord {
     public function sincronizar($args=[]) { 
         foreach($args as $key => $value) {
           if(property_exists($this, $key) && !is_null($value)) {
-            $this->$key = $value;
+            $this->$key = trim($value);
           }
         }
     }
@@ -116,6 +116,19 @@ class ActiveRecord {
         return array_shift( $resultado ) ;
     }
 
+    // Busca un registro por su token
+    public static function where($columna, $valor) {
+        $query = "SELECT * FROM " . static::$tabla  ." WHERE ${columna} = '${valor}'";
+        $resultado = self::consultarSQL($query);
+        return array_shift( $resultado ) ;
+    }
+
+    //Consuta Plana de SQL (Utilizar cuando los métodos del modelo no son suficientes)
+    public static function SQL($query) {
+        $resultado = self::consultarSQL($query);
+        return $resultado;
+    }
+
     // Obtener Registros con cierta cantidad
     public static function get($limite) {
         $query = "SELECT * FROM " . static::$tabla . " LIMIT ${limite}";
@@ -131,9 +144,9 @@ class ActiveRecord {
         // Insertar en la base de datos
         $query = " INSERT INTO " . static::$tabla . " ( ";
         $query .= join(', ', array_keys($atributos));
-        $query .= " ) VALUES (' "; 
+        $query .= " ) VALUES ('"; 
         $query .= join("', '", array_values($atributos));
-        $query .= " ') ";
+        $query .= "') ";
 
         // Resultado de la consulta
         $resultado = self::$db->query($query);

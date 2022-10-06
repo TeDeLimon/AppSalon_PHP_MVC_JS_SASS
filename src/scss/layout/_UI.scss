@@ -22,3 +22,17 @@
         padding:3rem 0;
     }
 }
+.barra {
+    @include m.tablet {
+        display:flex;
+        justify-content:space-between;
+        align-items:center;
+    }
+    p {
+        text-align:center;
+    }
+    .boton {
+        @include m.boton(v.$negro, v.$blanco);
+        margin:0;
+    }
+}
