@@ -1,0 +1,39 @@
+@use 'base/variables' as v;
+
+.citas {
+    list-style:none;
+    padding:0;
+
+    li {
+        padding:1rem;
+        border-top:1px solid v.$blanco;
+        p {
+            font-weight:v.$bold;
+            color:v.$azul;
+        }
+
+        span, .servicio {
+            font-weight:v.$regular;
+            color:v.$blanco;
+        }
+        &:hover {
+            background-color:lighten(v.$azul,15%);
+        }
+    }
+}
+.precio {
+    border-top:1px solid v.$blanco;
+    padding:1rem;
+}
+.servicios {
+    @extend .citas; //Brutal este código, extiende una clase a otra
+
+    .acciones {
+         margin:0;
+    }
+    .boton,
+    .boton-eliminar {
+        margin:0;
+        margin-bottom:1rem;
+    }
+}

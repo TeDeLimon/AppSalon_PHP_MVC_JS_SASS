@@ -127,8 +127,7 @@ async function mostrarServicios(servicios) {
 function seleccionarServicio(servicio) {
     const { id } = servicio;
     const { servicios } = cita;
-    const divServicio = document.querySelector(`[data-id-servicio="${id}"]`)
-
+    const divServicio = document.querySelector(`[data-id-servicio="${id}"]`);
     //Comprobar sí un servicio ya fue agregado y quitarlo
     if(servicios.some( agregado => agregado.id === id)) { //devuelve true o false en caso de que un servicio ya exista en el arreglo
         //Sí devuelve true significa que ya estaba arreglado, lo eliminamos
